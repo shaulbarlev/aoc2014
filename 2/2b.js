@@ -3,7 +3,7 @@ import fs from 'fs'
 let data
 let reports = []
 
-const input = fs.readFile('2/2-sample.txt', (err, input) => {
+const input = fs.readFile('2/2-input.txt', (err, input) => {
     data = input.toString();
     // console.log(data)
     reports = data.split(/\n/) // split by lines
@@ -65,24 +65,25 @@ const input = fs.readFile('2/2-sample.txt', (err, input) => {
 
     const dampener = (report) => {
         if (isSafe(report) == 'safe') {
-            console.log(`${report} is safe without changes`)
+            // console.log(`${report} is safe without changes`)
             return true
         }
         else {
             let failedIndex = isSafe(report)
             let splicedReport = report.slice()
-            for (let j = failedIndex - 1; j <= failedIndex + 1; j++) {
+            // console.log(report.length)
+            for (let j = 0; j < report.length; j++) {
                 let splicedReport = report.slice()
                 splicedReport.splice(j,1);
                 if (isSafe(splicedReport) == 'safe') {
-                    console.log(`${report} is safe after dampening (${splicedReport})`)
+                    // console.log(`${report} is safe after dampening (${splicedReport})`)
                     return true
                 }
                 else {
-                    console.log(`${report} is Unsafe`)
-                    return false
                 }
             }
+            // console.log(`${report} is Unsafe`)
+            return false
         }
     }
 
