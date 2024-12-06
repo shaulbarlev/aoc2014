@@ -68,8 +68,6 @@ const input = fs.readFile('2/2-input.txt', (err, input) => {
     // console.log(reports[0])
     console.log(isSafe(reports[5]))
 
-    reports.forEach(report => isSafe(report))
-
     const sum = reports.reduce((sum, report) => {
         if (isSafe(report)) {
             sum++
