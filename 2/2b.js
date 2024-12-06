@@ -71,13 +71,9 @@ const input = fs.readFile('2/2-sample.txt', (err, input) => {
         else {
             let failedIndex = isSafe(report)
             let splicedReport = report.slice()
-            // console.log(failedIndex)
-            
-            
             for (let j = failedIndex - 1; j <= failedIndex + 1; j++) {
                 let splicedReport = report.slice()
                 splicedReport.splice(j,1);
-                // console.log(splicedReport)
                 if (isSafe(splicedReport) == 'safe') {
                     console.log(`${report} is safe after dampening (${splicedReport})`)
                     return true
@@ -106,5 +102,4 @@ const input = fs.readFile('2/2-sample.txt', (err, input) => {
     }, 0)   
     console.log(sumdumpener)
 
-    // dampener(reports[2])
 })
