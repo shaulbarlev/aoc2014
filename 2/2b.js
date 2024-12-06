@@ -3,7 +3,7 @@ import fs from 'fs'
 let data
 let reports = []
 
-const input = fs.readFile('2/2-input.txt', (err, input) => {
+const input = fs.readFile('2/2-sample.txt', (err, input) => {
     data = input.toString();
     // console.log(data)
     reports = data.split(/\n/) // split by lines
@@ -13,14 +13,12 @@ const input = fs.readFile('2/2-input.txt', (err, input) => {
     })
     // console.log(reports)
     // console.log(reports[0])
-    
+
     const isSafe = (report) => {
         let currentValue
         let previousValue
         let direction = null
         let previousDirection = null
-        
-
 
         // console.log(report)
         if (report == '') { // is the row empty?
@@ -38,9 +36,9 @@ const input = fs.readFile('2/2-input.txt', (err, input) => {
             if (Math.abs(currentValue - previousValue) > 3 || Math.abs(currentValue - previousValue) < 1) {
                 // console.log('step NOT within range')
                 // console.log('not safe')
-                return false
+                return i
             }
-            
+
 
             //determine direction
             if (report[i] - report[i - 1] > 0) {
@@ -57,23 +55,56 @@ const input = fs.readFile('2/2-input.txt', (err, input) => {
             if (previousDirection != null) {
                 if (direction !== previousDirection) {
                     // console.log('not safe')
-                    return false
+                    return i
                 }
             }
             previousDirection = direction // remember things
         }
-        return true
+        return 'safe'
     }
 
-    // console.log(reports[0])
-    console.log(isSafe(reports[5]))
+    const dampener = (report) => {
+        if (isSafe(report) == 'safe') {
+            console.log(`${report} is safe without changes`)
+            return true
+        }
+        else {
+            let failedIndex = isSafe(report)
+            let splicedReport = report.slice()
+            // console.log(failedIndex)
+            
+            
+            for (let j = failedIndex - 1; j <= failedIndex + 1; j++) {
+                let splicedReport = report.slice()
+                splicedReport.splice(j,1);
+                // console.log(splicedReport)
+                if (isSafe(splicedReport) == 'safe') {
+                    console.log(`${report} is safe after dampening (${splicedReport})`)
+                    return true
+                }
+                else {
+                    console.log(`${report} is Unsafe`)
+                    return false
+                }
+            }
+        }
+    }
 
-    const sum = reports.reduce((sum, report) => {
-        if (isSafe(report)) {
+    // const sum = reports.reduce((sum, report) => {
+    //     if (isSafe(report) == 'safe') {
+    //         sum++
+    //     }
+    //     return sum
+    // }, 0)
+    // console.log(sum)
+
+    const sumdumpener = reports.reduce((sum, report) => {
+        if (dampener(report)) {
             sum++
         }
         return sum
-    },0)
+    }, 0)   
+    console.log(sumdumpener)
 
-    console.log(sum)
+    // dampener(reports[2])
 })
