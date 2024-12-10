@@ -21,6 +21,19 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         return count
     }
 
+    const rotate = (input) => {
+        let rotated = []
+        for (let i = 0; i < input[0].length; i++) {
+            let column = []
+            for (let j = 0; j < input.length; j++) {
+                console.log(`${j},${i}`)
+                column.push(input[j][i])
+            }
+            rotated.push(column)
+        }
+        return rotated
+    }
+
     const slantRight = (input) => {
         let slanted = structuredClone(input)
         let rows = input.length // this is the number of rows in the input
@@ -28,43 +41,28 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
             for (let j = 0; j < rows; j++) {
                 slanted[row].unshift(' ')
             }
-            for (let j = 0; j < input.length-rows; j++) {
+            for (let j = 0; j < input.length - rows; j++) {
                 slanted[row].push(' ')
             }
             rows--
         }
         return slanted
     }
-
     
     const slantLeft = (input) => {
         let slanted = structuredClone(input)
         let rows = input.length // this is the number of rows in the input
         for (const row in input) {
-            for (let j = 0; j < input.length-rows; j++) {
-                slanted[row].unshift(j)
+            for (let j = 0; j < input.length - rows; j++) {
+                slanted[row].unshift(' ')
             }
             for (let j = 0; j < rows; j++) {
-                slanted[row].push(j)
+                slanted[row].push(' ')
             }
             rows--
         }
         return slanted
     }
-    console.log(slantLeft(inputArray))
-    
-    // const slantLeft = (input) => {
-    //     let slanted = structuredClone(input)
-    //     let i = 0
-    //     for (const row in input) {
-    //         for (let j = 0; j < i; j++) {
-    //             slanted[row].unshift(' ')
-    //         }
-    //         i++
-    //     }
-    //     return slanted
-    // }
-
 
     const sum = (input) => {
         let sum = 0
