@@ -6,17 +6,14 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         inputArray[row] = inputArray[row].split('')
     }
     // console.log(inputArray)
+    let replacedHorizontal = []
+    let replaced = []
 
-    const horizontalCheck = (inputArray) => {
+    const horizontalCheck = (input) => {
         let count = 0
-        for (const row in inputArray) {
-            // console.log(inputArray[row].join(''))
-            if (inputArray[row].join('').match(/(XMAS)/)) {
-                count++
-            }
-            if (inputArray[row].join('').match(/(SAMX)/)) {
-                count++
-            }
+        for (const row in input) {
+            count += input[row].join('').match(/(SAMX)/g)?.length ?? 0
+            count += input[row].join('').match(/(XMAS)/g)?.length ?? 0
         }
         return count
     }
