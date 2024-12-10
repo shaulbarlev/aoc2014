@@ -1,4 +1,4 @@
-const input = fs.readFile('4/sample.txt', (err, input) => {
+const input = fs.readFile('4/input.txt', (err, input) => {
     data = input.toString()
 
     let inputArray = data.split(/\n/)
