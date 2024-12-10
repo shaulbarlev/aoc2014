@@ -1,4 +1,4 @@
-const input = fs.readFile('4/mini2.txt', (err, input) => {
+const input = fs.readFile('4/mini.txt', (err, input) => {
     data = input.toString()
 
     let inputArray = data.split(/\n/)
@@ -86,10 +86,18 @@ const input = fs.readFile('4/mini2.txt', (err, input) => {
     //map to an array of cropped regions
     const cropRegions = (array, coordinatesArray) => {
         return coordinatesArray.map(coordinates => {
-            return array[coordinates[1]].slice(coordinates[0]-1,coordinates[0]+2)
+            //                   [1] = y:row               [0] = x:char
+            let row1 = array[coordinates[1]-1].slice(coordinates[0]-1,coordinates[0]+2)
+            let row2 = array[coordinates[1]].slice(coordinates[0]-1,coordinates[0]+2)
+            let row3 = array[coordinates[1]+1].slice(coordinates[0]-1,coordinates[0]+2)
+
+            return [
+                row1,
+                row2,
+                row3
+            ]
         })
     }
-
     console.log(cropRegions(inputArray,anchorsCoords))
 
     console.log(inputArray)
