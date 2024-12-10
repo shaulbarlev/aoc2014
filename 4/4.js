@@ -1,10 +1,10 @@
-const input = fs.readFile('4/input.txt', (err, input) => {
+const input = fs.readFile('4/sample.txt', (err, input) => {
     data = input.toString()
-
     let inputArray = data.split(/\n/)
     for (const row in inputArray) {
         inputArray[row] = inputArray[row].split('')
     }
+
     // console.log(inputArray)
     let replacedHorizontal = []
     let replaced = []
