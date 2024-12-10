@@ -5,7 +5,7 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
     for (const row in inputArray) {
         inputArray[row] = inputArray[row].split('')
     }
-    console.log(inputArray)
+    // console.log(inputArray)
 
     const horizontalCheck = (inputArray) => {
         let count = 0
@@ -26,7 +26,7 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         for (let i = 0; i < input[0].length; i++) {
             let column = []
             for (let j = 0; j < input.length; j++) {
-                console.log(`${j},${i}`)
+                // console.log(`${j},${i}`)
                 column.push(input[j][i])
             }
             rotated.push(column)
@@ -64,24 +64,41 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         return slanted
     }
 
+    // console.log(slantLeft(inputArray))
+    // console.log(
+    //     rotate(slantLeft(inputArray))
+    // )
+
+
     const sum = (input) => {
         let sum = 0
         sum += horizontalCheck(input)
         sum += horizontalCheck(rotate(input))
-        sum += horizontalCheck(push(input))
-        sum += horizontalCheck(unshift(input))
+        sum += horizontalCheck(rotate(slantLeft(inputArray)))
+        sum += horizontalCheck(rotate(slantRight(inputArray)))
         return sum
     }
 
 
-    console.log(inputArray)
-    console.log(push(inputArray))
+    // console.log(inputArray)
+    // console.log(rotate(inputArray))
+    
 
     console.log(horizontalCheck(inputArray))
-    // console.log(horizontalCheck(rotate(inputArray)))
-    // console.log(horizontalCheck(rotate(push(inputArray))))
-    // console.log(horizontalCheck(unshift(rotate(inputArray))))
 
-    // console.log(sum(inputArray))
+    console.log(horizontalCheck(
+        rotate(inputArray)
+    ))
+
+    console.log(horizontalCheck(
+        rotate(slantLeft(inputArray))
+    ))
+
+    console.log(horizontalCheck(
+        rotate(slantRight(inputArray))
+    ))
+
+
+    console.log(sum(inputArray))
 
 })
