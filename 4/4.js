@@ -5,61 +5,70 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
     for (const row in inputArray) {
         inputArray[row] = inputArray[row].split('')
     }
-    // console.log(inputArray)
+    console.log(inputArray)
 
     const horizontalCheck = (inputArray) => {
         let count = 0
         for (const row in inputArray) {
             // console.log(inputArray[row].join(''))
-            if (inputArray[row].join('').match(/(XMAS)|(SAMX)/)) count++
+            if (inputArray[row].join('').match(/(XMAS)/)) {
+                count++
+            }
+            if (inputArray[row].join('').match(/(SAMX)/)) {
+                count++
+            }
         }
         return count
     }
 
-    const rotate = (inputArray) => {
-        let count = 0
-        let rotated = []
-        for (let i = 0; i < inputArray.length; i++) {
-            let column = []
-            for (let j = 0; j < inputArray[i].length; j++) {
-                column.push(inputArray[j][i])
-            }
-            rotated.push(column)
-        }
-        return rotated
-    }
-
-    const push = (input) => {
-        let pushed = structuredClone(input)
-        let i = input.length
+    const slantRight = (input) => {
+        let slanted = structuredClone(input)
+        let rows = input.length - 1 // this is the number of rows in the input
         for (const row in input) {
-            for (let j = 0; j < i; j++) {
-                pushed[row].unshift(' ')
+            for (let j = 0; j < rows; j++) {
+                slanted[row].unshift(' ')
             }
-            i--
+            for (let j = 0; j < input.length-rows; j++) {
+                slanted[row].push(' ')
+            }
+            rows--
         }
-        return pushed
+        return slanted
     }
 
-    const unshift = (input) => {
-        let unshifted = structuredClone(input)
+    console.log(slantRight(inputArray))
+
+    const slantLeft = (input) => {
+        let slanted = structuredClone(input)
         let i = 0
         for (const row in input) {
             for (let j = 0; j < i; j++) {
-                unshifted[row].unshift(' ')
+                slanted[row].unshift(' ')
             }
             i++
         }
-        return unshifted
+        return slanted
     }
-    
-    
-    console.log(horizontalCheck(inputArray))
-    console.log(horizontalCheck(rotate(inputArray)))
-    console.log(horizontalCheck(push(inputArray)))
-    console.log(horizontalCheck(unshift(inputArray)))
 
-    console.log( rotate(inputArray).length )
-    
+
+    const sum = (input) => {
+        let sum = 0
+        sum += horizontalCheck(input)
+        sum += horizontalCheck(rotate(input))
+        sum += horizontalCheck(push(input))
+        sum += horizontalCheck(unshift(input))
+        return sum
+    }
+
+
+    console.log(inputArray)
+    console.log(push(inputArray))
+
+    console.log(horizontalCheck(inputArray))
+    // console.log(horizontalCheck(rotate(inputArray)))
+    // console.log(horizontalCheck(rotate(push(inputArray))))
+    // console.log(horizontalCheck(unshift(rotate(inputArray))))
+
+    // console.log(sum(inputArray))
 
 })
