@@ -23,7 +23,7 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
 
     const slantRight = (input) => {
         let slanted = structuredClone(input)
-        let rows = input.length - 1 // this is the number of rows in the input
+        let rows = input.length // this is the number of rows in the input
         for (const row in input) {
             for (let j = 0; j < rows; j++) {
                 slanted[row].unshift(' ')
@@ -36,19 +36,34 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         return slanted
     }
 
-    console.log(slantRight(inputArray))
-
+    
     const slantLeft = (input) => {
         let slanted = structuredClone(input)
-        let i = 0
+        let rows = input.length // this is the number of rows in the input
         for (const row in input) {
-            for (let j = 0; j < i; j++) {
-                slanted[row].unshift(' ')
+            for (let j = 0; j < input.length-rows; j++) {
+                slanted[row].unshift(j)
             }
-            i++
+            for (let j = 0; j < rows; j++) {
+                slanted[row].push(j)
+            }
+            rows--
         }
         return slanted
     }
+    console.log(slantLeft(inputArray))
+    
+    // const slantLeft = (input) => {
+    //     let slanted = structuredClone(input)
+    //     let i = 0
+    //     for (const row in input) {
+    //         for (let j = 0; j < i; j++) {
+    //             slanted[row].unshift(' ')
+    //         }
+    //         i++
+    //     }
+    //     return slanted
+    // }
 
 
     const sum = (input) => {
