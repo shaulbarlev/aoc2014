@@ -1,12 +1,10 @@
-const input = fs.readFile('4/sample.txt', (err, input) => {
+const input = fs.readFile('4/input.txt', 'utf-8', (err, input) => {
     data = input.toString()
 
-    let inputArray = data.split(/\n/)
+    let inputArray = data.split(/\r\n/g)
     for (const row in inputArray) {
         inputArray[row] = inputArray[row].split('')
     }
-
-    console.log(inputArray)
 
     const findAnchors = (input) => {
         const regexp = /A/g;
@@ -29,17 +27,13 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
         let descending = false
         let ascending = false
 
-        console.log(inputarray.length)
-        console.log(inputarray[y].length)
-
-
-        if ((y > 0 && y < inputarray.length) && (x > 0 && x < inputarray[y].length)) {
+        if ((y > 0 && y < inputarray.length - 1) && (x > 0 && x < inputarray[y].length)) {
             if (
                 (inputarray[y - 1][x - 1] === 'M' && inputarray[y + 1][x + 1] === 'S')
                 ||
                 (inputarray[y - 1][x - 1] === 'S' && inputarray[y + 1][x + 1] === 'M')
             ) {
-                console.log('Descening MAS Found!')
+                // console.log('Descening MAS Found!')
                 descending = true
             }
             if (
@@ -47,21 +41,26 @@ const input = fs.readFile('4/sample.txt', (err, input) => {
                 ||
                 (inputarray[y + 1][x - 1] === 'S' && inputarray[y - 1][x + 1] === 'M')
             ) {
-                console.log('Ascending MAS Found!')
+                // console.log('Ascending MAS Found!')
                 ascending = true
             }
-
-            if (descending && ascending) {
-                return true
-            }
         }
+        return descending && ascending ? true : false
     }
 
-    console.log(
-        checkX(anchors[0], inputArray)
-    )
+    // console.log(anchors)
+
+    // console.log(
+    //     anchors.map(couple => checkX(couple, inputArray))
+    // )
 
 
+    let sum = anchors.reduce((accu, couple) => {
+        if (checkX(couple,inputArray)) accu++
+        return accu
+    }, 0)
+
+    console.log(sum)
 
 
 })
