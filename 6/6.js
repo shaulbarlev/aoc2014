@@ -6,44 +6,47 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     let atEdge = false
     const next = (mapInput) => {
         //determine guard position
-        let pos
+        let x
+        let y
+        let direction
         for (const line in mapInput) {
             index = mapInput[line].findIndex(char => char == 'V' || char == '^' || char == '<' || char == '>')
             if (index != -1) {
-                pos = [index, Number(line), mapInput[line][index]]
-                break
+                x = index
+                y = Number(line)
+                direction = mapInput[line][index]
             }
         }
-        const x = pos[0]
-        const y = pos[1]
-        const direction = pos[2]
         let newDirection
-        const getFrontPos = (posInput) => {
-            switch (posInput[2]) {
+
+        const getFrontPos = (xIn, yIn, directionInput) => {
+            switch (directionInput) {
                 case '^':
                     newDirection = '>'
-                    return [posInput[0], posInput[1] - 1]
+                    return [xIn, yIn - 1]
                 case '>':
                     newDirection = 'V'
-                    return [posInput[0] + 1, posInput[1]]
+                    return [xIn + 1, yIn]
                 case 'V':
                     newDirection = '<'
-                    return [posInput[0], posInput[1] + 1]
+                    return [xIn, yIn + 1]
                 case '<':
                     newDirection = '^'
-                    return [posInput[0] - 1, posInput[1]]
+                    return [xIn - 1, yIn]
             }
         }
 
-        const frontX = getFrontPos(pos)[0]
-        const frontY = getFrontPos(pos)[1]
+        const frontX = getFrontPos(x, y, direction)[0]
+        const frontY = getFrontPos(x, y, direction)[1]
+        console.log(frontY)
+        console.log(frontX)
         //check if guard is at the edge.
-        if (frontY > 8) atEdge = true
+        if (frontY > map.length - 3 || frontY < 0) atEdge = true
 
 
         const advance = (directionInput) => {
             map[y][x] = 'X'
-            map[frontY][frontX] = pos[2]
+            map[frontY][frontX] = direction
         }
 
         //determine if in front of guard there's an obstacle
@@ -60,10 +63,11 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     while (!atEdge) {
         next(map)
         i++
+        if (i > 0) break
     }
 
     console.log(
-        next(map),i
+        next(map), i
     )
 
 })
