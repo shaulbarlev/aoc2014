@@ -1,7 +1,7 @@
 const input = fs.readFile('4/input.txt', 'utf-8', (err, input) => {
     data = input.toString()
 
-    let inputArray = data.split(/\r\n/g)
+    let inputArray = data.split(/\n/g)
     for (const row in inputArray) {
         inputArray[row] = inputArray[row].split('')
     }
