@@ -8,17 +8,19 @@ const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
     updates = updates.map(update => update.split(','))
     console.log(rules[0])
 
-    const checkOrder = (update) => {
+    const reorder = (update) => {
         // iterating over all the rules.
         for (const rule in rules) {
-            // checking if the update contains both numbers in the current rule.
             let indexOfFirstValue = update.indexOf(rules[rule][0])
             let indexOfSecondValue = update.indexOf(rules[rule][1])
+            // checking if the update contains both numbers in the current rule.
             if (indexOfFirstValue != -1 && indexOfSecondValue != -1) {
-                console.log(indexOfFirstValue)
-                console.log(indexOfSecondValue)
+                // check if update is out of order.
                 if (indexOfSecondValue < indexOfFirstValue) {
-                    return false
+                    let firstValue = update[indexOfFirstValue]
+                    update.splice(indexOfFirstValue, 1) //remove out of order item.
+                    update.splice(indexOfSecondValue, 0, firstValue) //insert first before second.
+                    return update
                 }
             }
         }
@@ -26,18 +28,18 @@ const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
     }
 
     console.log(
-        checkOrder(updates[5])
+        reorder(updates[3])
     )
 
     const sumMiddle = () => {
-        return updates.reduce((sum,update) => {
+        return updates.reduce((sum, update) => {
             if (checkOrder(update)) {
-                sum += Number(update[(update.length-1)/2])
+                sum += Number(update[(update.length - 1) / 2])
             }
             return sum
         }, 0)
-        
+
     }
-    console.log(sumMiddle())
+    // console.log(sumMiddle())
 
 })
