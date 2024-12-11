@@ -6,19 +6,25 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     let atEdge = false
     let distinctPositions = 1
 
+    let x
+    let y
     const next = (mapInput) => {
         //determine guard position
-        let x
-        let y
         let direction
-        for (const line in mapInput) {
-            index = mapInput[line].findIndex(char => char == 'V' || char == '^' || char == '<' || char == '>')
-            if (index != -1) {
-                x = index
-                y = Number(line)
-                direction = mapInput[line][index]
+        const getPos = (mapInput) => {
+            for (const line in mapInput) {
+                index = mapInput[line].findIndex(char => char == 'V' || char == '^' || char == '<' || char == '>')
+                if (index != -1) {
+                    x = index
+                    y = Number(line)
+                    direction = mapInput[line][index]
+                }
             }
+            return [x,y]
         }
+        x = getPos(map)[0]
+        y = getPos(map)[1]
+
         
         let newDirection
         const getFrontPos = (xIn, yIn, directionIn) => {
@@ -49,7 +55,7 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
             if (map[frontY][frontX] != 'X') distinctPositions++
             map[frontY][frontX] = direction
         }
-        console.log(map[frontY][frontX])
+        // console.log(map[frontY][frontX])
         //determine if in front of guard there's an obstacle
         if (map[frontY][frontX] == '#') {
             //rotate!
@@ -59,19 +65,31 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
             advance(direction)
             frontX = getFrontPos(x, y, direction)[0]
             frontY = getFrontPos(x, y, direction)[1]
-            if (frontY > map.length-2) atEdge = true
+            x = getPos(map)[0]
+            y = getPos(map)[1]
+            if (
+                frontY >= map.length-1
+                ||
+                frontY <= 0
+                ||
+                frontX >= map.length[0]-1
+                ||
+                frontX <= 0
+            ) {
+                atEdge = true
+            }
         }
         return map
     }
 
     while (!atEdge) {
         i++
-        if (i >= 300) break
+        if (i >= 500) break
         next(map)
     }
 
     console.log(
-        map,distinctPositions
+        map,i,distinctPositions,x,y
     )
 
 })
