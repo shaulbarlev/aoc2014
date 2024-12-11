@@ -4,6 +4,8 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     // console.log(map)
     let i = 0
     let atEdge = false
+    let distinctPositions = 1
+
     const next = (mapInput) => {
         //determine guard position
         let x
@@ -44,6 +46,7 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
         
         const advance = (directionInput) => {
             map[y][x] = 'X'
+            if (map[frontY][frontX] != 'X') distinctPositions++
             map[frontY][frontX] = direction
         }
         console.log(map[frontY][frontX])
@@ -62,13 +65,13 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     }
 
     while (!atEdge) {
-        next(map)
         i++
-        if (i > 300) break
+        if (i >= 300) break
+        next(map)
     }
 
     console.log(
-        map,i
+        map,distinctPositions
     )
 
 })
