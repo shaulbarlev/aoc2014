@@ -1,4 +1,5 @@
-const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
+const fs = require('fs');
+const input = fs.readFile('6/input.txt', 'utf-8', (err, input) => {
     let map = input.split(/\n/)
     map = map.map(line => line.split(''))
     // console.log(map)
@@ -68,13 +69,13 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
             x = getPos(map)[0]
             y = getPos(map)[1]
             if (
-                frontY >= map.length-1
+                y == map.length-1
                 ||
-                frontY <= 0
+                y == 0
                 ||
-                frontX >= map.length[0]-1
+                x == map[0].length-1
                 ||
-                frontX <= 0
+                x == 0
             ) {
                 atEdge = true
             }
@@ -84,9 +85,15 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
 
     while (!atEdge) {
         i++
-        if (i >= 500) break
+        if (i >= 5500) break
         next(map)
     }
+
+    // for (let j = 0; j<4; j++) {
+    //     i++
+    //     if (i >= 500) break
+    //     next(map)
+    // }
 
     console.log(
         map,i,distinctPositions,x,y
