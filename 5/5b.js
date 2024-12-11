@@ -8,23 +8,51 @@ const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
     updates = updates.map(update => update.split(','))
     console.log(rules[0])
 
-    const reorder = (update) => {
+
+    const checkOrder = (update) => {
         // iterating over all the rules.
         for (const rule in rules) {
+            // checking if the update contains both numbers in the current rule.
             let indexOfFirstValue = update.indexOf(rules[rule][0])
             let indexOfSecondValue = update.indexOf(rules[rule][1])
-            // checking if the update contains both numbers in the current rule.
             if (indexOfFirstValue != -1 && indexOfSecondValue != -1) {
-                // check if update is out of order.
+                console.log(indexOfFirstValue)
+                console.log(indexOfSecondValue)
                 if (indexOfSecondValue < indexOfFirstValue) {
-                    let firstValue = update[indexOfFirstValue]
-                    update.splice(indexOfFirstValue, 1) //remove out of order item.
-                    update.splice(indexOfSecondValue, 0, firstValue) //insert first before second.
-                    return update
+                    //order is bad
+                    return false
                 }
             }
         }
+        //order is good
         return true
+    }
+
+    const reorder = (update) => {
+        if (checkOrder(update)) return false //reorder not needed.
+        // keep ordering until good.
+        while (!checkOrder(update)) {
+            // iterating over all the rules.
+            for (const rule in rules) {
+                let indexOfFirstValue = update.indexOf(rules[rule][0])
+                let indexOfSecondValue = update.indexOf(rules[rule][1])
+                // checking if the update contains both numbers in the current rule.
+                if (indexOfFirstValue != -1 && indexOfSecondValue != -1) {
+                    // check if update is out of order.
+                    // if (indexOfSecondValue < indexOfFirstValue) {
+                    //     let secondValue = update[indexOfSecondValue]
+                    //     update.splice(indexOfSecondValue, 1) //remove supposed second value.
+                    //     update.splice(indexOfFirstValue+1, 0, secondValue) //insert second after first.
+                    // }
+                    if (indexOfSecondValue < indexOfFirstValue) {
+                        let firstValue = update[indexOfFirstValue]
+                        update.splice(indexOfFirstValue, 1) //remove supposed first value.
+                        update.splice(indexOfSecondValue, 0, firstValue) //insert first before second.
+                    }
+                }
+            }
+        }
+        return update
     }
 
     console.log(
