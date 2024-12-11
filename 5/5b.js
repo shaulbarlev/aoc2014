@@ -1,4 +1,4 @@
-const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
+const input = fs.readFile('5/input.txt', 'utf-8', (err, input) => {
     let [rules, updates] = [input.split(/\n\n/)[0], input.split(/\n\n/)[1]]
     rules = rules.split(/\n/)
     rules = rules.map(rule => rule.split('|'))
@@ -16,8 +16,8 @@ const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
             let indexOfFirstValue = update.indexOf(rules[rule][0])
             let indexOfSecondValue = update.indexOf(rules[rule][1])
             if (indexOfFirstValue != -1 && indexOfSecondValue != -1) {
-                console.log(indexOfFirstValue)
-                console.log(indexOfSecondValue)
+                // console.log(indexOfFirstValue)
+                // console.log(indexOfSecondValue)
                 if (indexOfSecondValue < indexOfFirstValue) {
                     //order is bad
                     return false
@@ -55,19 +55,20 @@ const input = fs.readFile('5/example.txt', 'utf-8', (err, input) => {
         return update
     }
 
-    console.log(
-        reorder(updates[3])
-    )
+    // console.log(
+    //     reorder(updates[3])
+    // )
 
     const sumMiddle = () => {
         return updates.reduce((sum, update) => {
-            if (checkOrder(update)) {
+            if (!checkOrder(update)) {
+                update = reorder(update)
                 sum += Number(update[(update.length - 1) / 2])
             }
             return sum
         }, 0)
 
     }
-    // console.log(sumMiddle())
+    console.log(sumMiddle())
 
 })
