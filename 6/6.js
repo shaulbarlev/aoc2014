@@ -1,7 +1,7 @@
 const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     let map = input.split(/\n/)
     map = map.map(line => line.split(''))
-    console.log(map)
+    // console.log(map)
     let i = 0
     let atEdge = false
     const next = (mapInput) => {
@@ -17,8 +17,8 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
                 direction = mapInput[line][index]
             }
         }
+        
         let newDirection
-
         const getFrontPos = (xIn, yIn, directionInput) => {
             switch (directionInput) {
                 case '^':
@@ -38,11 +38,13 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
 
         const frontX = getFrontPos(x, y, direction)[0]
         const frontY = getFrontPos(x, y, direction)[1]
-        console.log(frontY)
-        console.log(frontX)
-        //check if guard is at the edge.
-        if (frontY > map.length - 3 || frontY < 0) atEdge = true
+        // console.log(frontY)
+        // console.log(frontX)
 
+        //check if guard is at the edge.
+        if (x >= map.length-2 || y <= 0) {
+            atEdge = true
+        }
 
         const advance = (directionInput) => {
             map[y][x] = 'X'
@@ -63,11 +65,12 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
     while (!atEdge) {
         next(map)
         i++
-        if (i > 0) break
+        if (i > 300) break
     }
+    console.log(`Reached edge at x:`)
 
     console.log(
-        next(map), i
+        next(map),
     )
 
 })
