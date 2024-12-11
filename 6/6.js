@@ -36,9 +36,9 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
             }
         }
         
-        const frontX = getFrontPos(x, y, direction)[0]
-        const frontY = getFrontPos(x, y, direction)[1]
-        if (frontY > map.length-2) atEdge = true
+        let frontX = getFrontPos(x, y, direction)[0]
+        let frontY = getFrontPos(x, y, direction)[1]
+        
         // console.log(frontY)
         // console.log(frontX)
         
@@ -54,6 +54,9 @@ const input = fs.readFile('6/example.txt', 'utf-8', (err, input) => {
         }
         else { //free to continue
             advance(direction)
+            frontX = getFrontPos(x, y, direction)[0]
+            frontY = getFrontPos(x, y, direction)[1]
+            if (frontY > map.length-2) atEdge = true
         }
         return map
     }
